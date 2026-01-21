@@ -1,11 +1,20 @@
+import { useEffect, useState } from "react";
 import HeroSlider from "../components/HeroSlider";
 import ProductCard from "../components/ProductCard";
 import CategoryCard from "../components/CategoryCard";
+import ProductSkeleton from "../components/ProductSkeleton";
 
 import products from "../data/products";
 import categories from "../data/categories";
 
 const Home = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
   const bestSellers = products.filter(p => p.isBestSeller).slice(0, 8);
   const newArrivals = products.filter(p => p.isNew).slice(0, 8);
   const dealOfTheDay = products.find(p => p.discount > 0);
@@ -16,50 +25,52 @@ const Home = () => {
       {/* HERO SLIDER */}
       <HeroSlider />
 
+<div style={{ marginTop: "-12px" }}>
+  {/* Trust strip */}
+</div>
+
+
       {/* TRUST STRIP */}
- <section
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    gap: "16px",
-    flexWrap: "wrap",
-    background: "linear-gradient(135deg,#faf3ff,#f5f9ff)",
-    padding: "14px 18px",
-    borderRadius: "28px",
-    margin: "32px auto 56px",
-    maxWidth: "900px",
-    fontSize: "13px",
-  }}
->
-  {[
-    "Clinically Backed",
-    "Low GI Foods",
-    "No Preservatives",
-    "Trusted by Families",
-  ].map((text) => (
-    <div
-      key={text}
-      style={{
-        background: "#fff",
-        padding: "8px 14px",
-        borderRadius: "999px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
-        display: "flex",
-        alignItems: "center",
-        gap: "6px",
-      }}
-    >
-      ✔ {text}
-    </div>
-  ))}
-</section>
-
-
+      <section
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "14px",
+          flexWrap: "wrap",
+          background: "linear-gradient(135deg,#faf3ff,#f5f9ff)",
+          padding: "14px 18px",
+          borderRadius: "28px",
+          margin: "28px auto 56px",
+          maxWidth: "900px",
+          fontSize: "13px",
+        }}
+      >
+        {[
+          "Clinically Backed",
+          "Low GI Foods",
+          "No Preservatives",
+          "Trusted by Families",
+        ].map((text) => (
+          <div
+            key={text}
+            style={{
+              background: "#fff",
+              padding: "8px 14px",
+              borderRadius: "999px",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+            }}
+          >
+            ✔ {text}
+          </div>
+        ))}
+      </section>
 
       {/* SHOP BY HEALTH GOAL */}
       <section style={{ marginBottom: "72px" }}>
         <h2 style={sectionTitle}>Shop by Health Goal</h2>
-
         <div style={gridStyle}>
           {categories.map(cat => (
             <CategoryCard key={cat.id} {...cat} />
@@ -70,11 +81,14 @@ const Home = () => {
       {/* BEST SELLERS */}
       <section style={{ marginBottom: "72px" }}>
         <h2 style={sectionTitle}>🔥 Best Sellers</h2>
-
         <div style={gridStyle}>
-          {bestSellers.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {loading
+            ? Array.from({ length: 8 }).map((_, i) => (
+                <ProductSkeleton key={i} />
+              ))
+            : bestSellers.map(product => (
+                <ProductCard key={product.id} product={product} />
+              ))}
         </div>
       </section>
 
@@ -83,7 +97,7 @@ const Home = () => {
         <section style={{ marginBottom: "72px", textAlign: "center" }}>
           <h2 style={sectionTitle}>⚡ Deal of the Day</h2>
           <div style={{ maxWidth: "320px", margin: "auto" }}>
-            <ProductCard product={dealOfTheDay} />
+            {loading ? <ProductSkeleton /> : <ProductCard product={dealOfTheDay} />}
           </div>
         </section>
       )}
@@ -91,11 +105,14 @@ const Home = () => {
       {/* NEW ARRIVALS */}
       <section style={{ marginBottom: "80px" }}>
         <h2 style={sectionTitle}>🆕 New Arrivals</h2>
-
         <div style={gridStyle}>
-          {newArrivals.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {loading
+            ? Array.from({ length: 8 }).map((_, i) => (
+                <ProductSkeleton key={i} />
+              ))
+            : newArrivals.map(product => (
+                <ProductCard key={product.id} product={product} />
+              ))}
         </div>
       </section>
 
@@ -131,7 +148,7 @@ const sectionTitle = {
 const gridStyle = {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-  gap: "24px",
+  gap: "16px", // tightened for premium look
 };
 
 export default Home;

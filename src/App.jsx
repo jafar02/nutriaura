@@ -13,6 +13,7 @@ import Success from "./pages/Success";
 import AllProducts from "./pages/AllProducts";
 import Wishlist from "./pages/Wishlist";
 import CategoryProducts from "./pages/CategoryProducts";
+import Category from "./pages/Category";
 // Policy Pages
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
@@ -42,6 +43,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/success" element={<Success />} />
+        <Route path="/category/:slug" element={<Category />} />
         <Route path="/category/:slug" element={<CategoryProducts />} />
         {/* POLICIES */}
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

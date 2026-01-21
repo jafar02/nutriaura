@@ -8,8 +8,13 @@ const ProductCard = ({ product }) => {
 
   const isInCart = cart.some((item) => item.id === product.id);
 
+  // 🎨 One solid accent color per product
+  const accent = product.accent || "#2e7d32";
+
   const handleAddToCart = (e) => {
     e.preventDefault();
+    if (isInCart) return;
+
     addToCart(product);
     setAdded(true);
     setTimeout(() => setAdded(false), 1200);
@@ -27,40 +32,53 @@ const ProductCard = ({ product }) => {
       <div
         style={{
           background: "#fff",
-          borderRadius: "20px",
+          borderRadius: "18px",
           overflow: "hidden",
-          boxShadow: "0 10px 28px rgba(0,0,0,0.08)",
-          transition: "transform 0.25s ease",
+          boxShadow: `0 10px 26px ${accent}22`,
+          transition: "transform 0.25s ease, box-shadow 0.25s ease",
         }}
-        onMouseEnter={(e) =>
-          (e.currentTarget.style.transform = "translateY(-6px)")
-        }
-        onMouseLeave={(e) =>
-          (e.currentTarget.style.transform = "none")
-        }
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "translateY(-6px)";
+          e.currentTarget.style.boxShadow = `0 18px 36px ${accent}33`;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "none";
+          e.currentTarget.style.boxShadow = `0 10px 26px ${accent}22`;
+        }}
       >
-        {/* IMAGE */}
+        {/* IMAGE AREA */}
         <div
           style={{
             position: "relative",
             background: "#fafafa",
-            padding: "20px",
-            textAlign: "center",
+            height: "150px",                 // 🔥 FIXED HEIGHT (NO BLANK SPACE)
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "8px",
+            overflow: "hidden",
+          }}
+          onMouseEnter={(e) => {
+            const img = e.currentTarget.querySelector("img");
+            if (img) img.style.transform = "scale(1.08)";
+          }}
+          onMouseLeave={(e) => {
+            const img = e.currentTarget.querySelector("img");
+            if (img) img.style.transform = "scale(1)";
           }}
         >
           {product.discount > 0 && (
             <span
               style={{
                 position: "absolute",
-                top: "12px",
-                left: "12px",
-                background:
-                  "linear-gradient(135deg,#f06292,#8e24aa,#1e88e5)",
+                top: "10px",
+                left: "10px",
+                background: accent,
                 color: "#fff",
                 fontSize: "12px",
                 fontWeight: 600,
                 padding: "4px 10px",
-                borderRadius: "14px",
+                borderRadius: "999px",
               }}
             >
               {product.discount}% OFF
@@ -71,16 +89,17 @@ const ProductCard = ({ product }) => {
             src={product.image}
             alt={product.name}
             style={{
-              height: "180px",
+              maxHeight: "100%",
+              maxWidth: "100%",
               objectFit: "contain",
-              transition: "transform 0.3s ease",
+              transition: "transform 0.35s ease",
             }}
           />
         </div>
 
         {/* CONTENT */}
-        <div style={{ padding: "16px" }}>
-          <h3 style={{ fontSize: "16px", marginBottom: "6px" }}>
+        <div style={{ padding: "14px" }}>
+          <h3 style={{ fontSize: "15px", marginBottom: "4px" }}>
             {product.name}
           </h3>
 
@@ -90,8 +109,8 @@ const ProductCard = ({ product }) => {
           </div>
 
           {/* PRICE */}
-          <div style={{ marginBottom: "12px" }}>
-            <strong style={{ fontSize: "18px" }}>
+          <div style={{ marginBottom: "10px" }}>
+            <strong style={{ fontSize: "17px", color: accent }}>
               ₹{discountedPrice}
             </strong>
             {product.discount > 0 && (
@@ -100,7 +119,7 @@ const ProductCard = ({ product }) => {
                   marginLeft: "8px",
                   textDecoration: "line-through",
                   color: "#999",
-                  fontSize: "14px",
+                  fontSize: "13px",
                 }}
               >
                 ₹{product.price}
@@ -109,27 +128,23 @@ const ProductCard = ({ product }) => {
           </div>
 
           {/* ADD TO CART */}
-         <button
-  onClick={handleAddToCart}
-  disabled={isInCart}
-  style={{
-    width: "100%",
-    padding: "14px",        // 👈 here
-    fontSize: "15px",       // 👈 here
-    borderRadius: "16px",
-    border: "none",
-    fontWeight: 600,
-    cursor: isInCart ? "default" : "pointer",
-    color: "#fff",
-    background: isInCart
-      ? "#4caf50"
-      : "linear-gradient(135deg,#f06292,#8e24aa,#1e88e5)",
-  }}
->
-  {isInCart ? "Added ✓" : "Add to Cart"}
-</button>
-
-
+          <button
+            onClick={handleAddToCart}
+            disabled={isInCart}
+            style={{
+              width: "100%",
+              padding: "12px",
+              fontSize: "14px",
+              borderRadius: "14px",
+              border: "none",
+              fontWeight: 600,
+              cursor: isInCart ? "default" : "pointer",
+              color: "#fff",
+              background: isInCart ? "#4caf50" : accent,
+            }}
+          >
+            {isInCart ? "Added ✓" : "Add to Cart"}
+          </button>
         </div>
       </div>
     </Link>

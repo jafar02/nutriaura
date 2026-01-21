@@ -19,7 +19,7 @@ const AllProducts = () => {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          gap: "24px",
+          gap: "16px",
           marginTop: "24px",
         }}
       >

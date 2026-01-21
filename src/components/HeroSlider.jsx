@@ -13,33 +13,30 @@ const HeroSlider = () => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % slides.length);
     }, 3500);
-
     return () => clearInterval(timer);
   }, []);
 
   return (
     <div
-  style={{
-    width: "100vw",
-    marginLeft: "50%",
-    transform: "translateX(-50%)",
-    marginTop: "-12px",          
-    overflow: "hidden",
-  }}
->
-  <img
-    src={slides[index]}
-    alt="NutriAura Banner"
-    style={{
-      width: "100%",
-      height: "auto",
-      maxHeight: "clamp(380px, 60vh, 560px)", 
-      objectFit: "contain",
-      display: "block",
-    }}
-  />
-</div>
-
+      style={{
+        width: "100vw",
+        marginLeft: "50%",
+        transform: "translateX(-50%)",
+        overflow: "hidden",
+      }}
+    >
+      <img
+        src={slides[index]}
+        alt="NutriAura Banner"
+        style={{
+          width: "100%",
+          height: "auto",
+          maxHeight: "520px",   
+          display: "block",
+          objectFit: "contain", 
+        }}
+      />
+    </div>
   );
 };
 

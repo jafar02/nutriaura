@@ -11,7 +11,8 @@ const ProductSkeleton = () => {
       <div
         style={{
           height: "180px",
-          backgroundColor: "#eaeaea",
+          background:
+              "linear-gradient(90deg,#f0f0f0,#e6e6e6,#f0f0f0)",
           borderRadius: "12px",
           marginBottom: "12px",
           animation: "pulse 1.5s infinite",
@@ -22,7 +23,8 @@ const ProductSkeleton = () => {
         style={{
           height: "14px",
           width: "80%",
-          backgroundColor: "#eaeaea",
+        background:
+  "linear-gradient(90deg,#f0f0f0,#e6e6e6,#f0f0f0)",
           borderRadius: "6px",
           marginBottom: "8px",
           animation: "pulse 1.5s infinite",
@@ -33,7 +35,8 @@ const ProductSkeleton = () => {
         style={{
           height: "14px",
           width: "60%",
-          backgroundColor: "#eaeaea",
+         background:
+  "linear-gradient(90deg,#f0f0f0,#e6e6e6,#f0f0f0)",
           borderRadius: "6px",
           animation: "pulse 1.5s infinite",
         }}
